@@ -1,0 +1,3373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#050506" />
+
+  <title>AbdurSolo — Designer and developer of websites and Telegram bots from Russia</title>
+  <meta id="meta-desc" name="description" content="AbdurSolo — Designer and developer of websites, Telegram bots and applications from Russia. Quiet architecture, clean code, and meticulous attention to detail." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta id="og-title" property="og:title" content="AbdurSolo — Designer &amp; Developer" />
+  <meta id="og-desc" property="og:description" content="Designer and developer of websites and Telegram bots from Russia." />
+  <meta property="og:image" content="logo.png" />
+  <meta id="og-locale" property="og:locale" content="en_US" />
+
+  <!-- Schema.org Person JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "AbdurSolo",
+    "jobTitle": "Designer and developer of websites and Telegram bots",
+    "nationality": {
+      "@type": "Country",
+      "name": "Russia"
+    },
+    "image": "logo.png",
+    "sameAs": [
+      "https://t.me/AbdurSolo"
+    ]
+  }
+  </script>
+
+  <!-- Google Fonts: Cormorant Garamond (Display) & Manrope (UI/Body), Latin + Cyrillic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-top: #050506;
+      --bg-bottom: #0b0b0d;
+      --text: #f5f5f7;
+      --muted: #9a9aa2;
+      --dim: #5d5d66;
+      --grey-1: #121214;
+      --grey-2: #1a1a1e;
+      --grey-3: #2a2a2e;
+      --hairline: rgba(255, 255, 255, 0.12);
+      --hairline-soft: rgba(255, 255, 255, 0.08);
+      --hairline-strong: rgba(255, 255, 255, 0.22);
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-bg-deep: rgba(14, 14, 17, 0.58);
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+      --spot-x: 50vw;
+      --spot-y: 35vh;
+      --k: 1;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      background-color: var(--bg-top);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+      selection-background-color: rgba(255, 255, 255, 0.18);
+    }
+
+    ::selection {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+    }
+
+    /* Skip Link */
+    .skip-link {
+      position: fixed;
+      top: -100px;
+      left: 24px;
+      z-index: 10000;
+      padding: 10px 18px;
+      background: #f5f5f7;
+      color: #050506;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 999px;
+      transition: transform 0.4s var(--ease-silk);
+    }
+    .skip-link:focus-visible {
+      transform: translateY(116px);
+      outline: 2px solid #ffffff;
+      outline-offset: 4px;
+    }
+
+    /* Focus Rings */
+    :focus-visible {
+      outline: 1.5px solid rgba(255, 255, 255, 0.85);
+      outline-offset: 4px;
+    }
+
+    /* Scroll Progress Bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      z-index: 950;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    /* Background Atmosphere */
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: 0.24;
+      will-change: transform;
+    }
+
+    .orb--1 {
+      width: 58vw;
+      height: 58vw;
+      min-width: 420px;
+      min-height: 420px;
+      top: -18%;
+      left: -12%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(160, 160, 170, 0.06) 48%, transparent 72%);
+      animation: orbDrift1 68s ease-in-out infinite alternate;
+    }
+
+    .orb--2 {
+      width: 52vw;
+      height: 52vw;
+      min-width: 380px;
+      min-height: 380px;
+      top: 34%;
+      right: -16%;
+      background: radial-gradient(circle, rgba(220, 220, 230, 0.18) 0%, rgba(120, 120, 130, 0.05) 52%, transparent 74%);
+      animation: orbDrift2 76s ease-in-out infinite alternate;
+    }
+
+    .orb--3 {
+      width: 60vw;
+      height: 60vw;
+      min-width: 440px;
+      min-height: 440px;
+      bottom: -24%;
+      left: 18%;
+      background: radial-gradient(circle, rgba(245, 245, 247, 0.15) 0%, rgba(100, 100, 110, 0.04) 50%, transparent 72%);
+      animation: orbDrift3 84s ease-in-out infinite alternate;
+    }
+
+    @keyframes orbDrift1 {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(8vw, 6vh, 0) scale(1.07); }
+      100% { transform: translate3d(-4vw, 14vh, 0) scale(0.96); }
+    }
+    @keyframes orbDrift2 {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(-10vw, -7vh, 0) scale(1.05); }
+      100% { transform: translate3d(-5vw, 9vh, 0) scale(0.94); }
+    }
+    @keyframes orbDrift3 {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(7vw, -9vh, 0) scale(1.06); }
+      100% { transform: translate3d(-8vw, -4vh, 0) scale(0.97); }
+    }
+
+    .cursor-spotlight {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background: radial-gradient(
+        680px circle at var(--spot-x) var(--spot-y),
+        rgba(255, 255, 255, 0.045),
+        rgba(255, 255, 255, 0.014) 38%,
+        transparent 70%
+      );
+    }
+
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.035;
+      mix-blend-mode: overlay;
+    }
+
+    /* Language crossfade utility */
+    [data-i18n-node] {
+      transition: opacity 0.45s var(--ease-silk), filter 0.45s var(--ease-silk);
+      will-change: opacity, filter;
+    }
+    [data-i18n-node].is-switching-lang {
+      opacity: 0;
+      filter: blur(7px);
+    }
+
+    /* 1. Intro Curtain (First Load) */
+    .intro-curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: #050506;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      clip-path: inset(0 0 0% 0);
+      transition: clip-path 1.15s var(--ease-silk);
+      will-change: clip-path;
+    }
+    .intro-curtain.is-lifting {
+      clip-path: inset(0 0 100% 0);
+      pointer-events: none;
+    }
+    .intro-curtain.is-done {
+      display: none;
+    }
+    .intro-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+    }
+    .intro-logo-wrap {
+      opacity: 0;
+      filter: blur(12px);
+      transform: scale(1.06);
+      transition: opacity 1.05s var(--ease-silk), filter 1.05s var(--ease-silk), transform 1.15s var(--ease-silk);
+    }
+    .intro-curtain.is-playing .intro-logo-wrap {
+      opacity: 1;
+      filter: blur(0px);
+      transform: scale(1);
+    }
+    .intro-logo-img {
+      width: 78px;
+      height: 78px;
+      object-fit: contain;
+      display: block;
+      border-radius: 16px;
+    }
+    .logo-fallback {
+      font-family: var(--font-display);
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      display: none;
+    }
+    .intro-logo-wrap .logo-fallback {
+      font-size: 2.5rem;
+    }
+    .intro-line {
+      width: 96px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.9s var(--ease-silk) 0.32s;
+    }
+    .intro-curtain.is-playing .intro-line {
+      transform: scaleX(1);
+    }
+
+    /* Project Open Curtain (Animation 9) */
+    .project-curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 1900;
+      background: rgba(5, 5, 6, 0.96);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.55s var(--ease-silk);
+    }
+    .project-curtain.is-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .project-curtain__eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: transform 0.55s var(--ease-silk), opacity 0.55s var(--ease-silk);
+    }
+    .project-curtain__title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      color: var(--text);
+      letter-spacing: -0.02em;
+      text-align: center;
+      transform: translateY(14px) scale(0.98);
+      filter: blur(8px);
+      transition: transform 0.6s var(--ease-silk), filter 0.6s var(--ease-silk);
+    }
+    .project-curtain.is-active .project-curtain__eyebrow {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .project-curtain.is-active .project-curtain__title {
+      transform: translateY(0) scale(1);
+      filter: blur(0px);
+    }
+
+    /* Toast Notification (Animation 11) */
+    .toast-layer {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1800;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      pointer-events: none;
+    }
+    .toast {
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: rgba(18, 18, 22, 0.82);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      color: var(--text);
+      font-size: 0.8125rem;
+      letter-spacing: 0.03em;
+      opacity: 0;
+      transform: translateY(-22px);
+      transition: opacity 0.45s var(--ease-silk), transform 0.45s var(--ease-silk);
+    }
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 2. Top Bar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      padding: 18px 24px;
+      background: rgba(5, 5, 6, 0);
+      border-bottom: 1px solid rgba(255, 255, 255, 0);
+      transition:
+        background-color 0.6s var(--ease-silk),
+        backdrop-filter 0.6s var(--ease-silk),
+        -webkit-backdrop-filter 0.6s var(--ease-silk),
+        border-color 0.6s var(--ease-silk),
+        padding 0.6s var(--ease-silk),
+        box-shadow 0.6s var(--ease-silk);
+    }
+    .topbar.is-scrolled {
+      padding: 13px 24px;
+      background: rgba(10, 10, 12, 0.64);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      border-bottom-color: var(--hairline);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+    }
+    .topbar__inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 8px;
+      display: block;
+      transition: transform 0.5s var(--ease-silk);
+    }
+    .brand-link:hover .brand-logo {
+      transform: scale(1.04);
+    }
+    .brand-link .logo-fallback {
+      font-size: 1.45rem;
+      letter-spacing: -0.02em;
+    }
+
+    /* Language Switcher (EN | RU) */
+    .lang-switch {
+      position: relative;
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      border: 1px solid var(--hairline);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+    .lang-switch__thumb {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 3px;
+      width: calc(50% - 3px);
+      border-radius: 999px;
+      background: #f5f5f7;
+      box-shadow: 0 2px 10px rgba(255, 255, 255, 0.25);
+      transform: translateX(0%);
+      transition: transform 0.5s var(--ease-silk);
+      pointer-events: none;
+    }
+    .lang-switch[data-active-lang="ru"] .lang-switch__thumb {
+      transform: translateX(100%);
+    }
+    .lang-switch__btn {
+      position: relative;
+      z-index: 1;
+      appearance: none;
+      background: none;
+      border: none;
+      padding: 5px 13px;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      border-radius: 999px;
+      transition: color 0.45s var(--ease-silk);
+    }
+    .lang-switch__btn[aria-pressed="true"] {
+      color: #050506;
+    }
+    .lang-switch__btn:hover:not([aria-pressed="true"]) {
+      color: var(--text);
+    }
+
+    /* Main Container & Sections */
+    main {
+      position: relative;
+      z-index: 3;
+    }
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    section {
+      position: relative;
+      padding: clamp(88px, 13vh, 148px) 0;
+    }
+    .section-divider {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--hairline), transparent);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-variant: small-caps;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* 2. Hero Section */
+    .hero {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 120px;
+      padding-bottom: 72px;
+    }
+    .hero__content {
+      max-width: 920px;
+    }
+    .hero__meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .hero__meta-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #f5f5f7;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+    .hero__title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(3.6rem, 11vw, 8.6rem);
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 28px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .char-mask {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+      padding-bottom: 0.06em;
+    }
+    .char-inner {
+      display: inline-block;
+      transform: translateY(112%);
+      opacity: 0;
+      transition: transform 1.05s var(--ease-silk), opacity 1.05s var(--ease-silk);
+      will-change: transform, opacity;
+    }
+    .hero.is-revealed .char-inner {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+
+    .line-mask {
+      overflow: hidden;
+    }
+    .line-inner {
+      transform: translateY(105%);
+      opacity: 0;
+      transition: transform 1.05s var(--ease-silk), opacity 1.05s var(--ease-silk);
+      will-change: transform, opacity;
+    }
+    .hero.is-revealed .line-inner {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+
+    .hero__tagline {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1.35rem, 2.7vw, 2.2rem);
+      line-height: 1.3;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      max-width: 720px;
+      margin-bottom: 20px;
+    }
+    .hero__intro {
+      font-size: clamp(0.95rem, 1.3vw, 1.08rem);
+      color: var(--muted);
+      max-width: 590px;
+      font-weight: 300;
+      line-height: 1.75;
+    }
+
+    .hero__scroll-cue {
+      margin-top: clamp(56px, 10vh, 110px);
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: color 0.4s var(--ease-silk);
+    }
+    .hero__scroll-cue:hover {
+      color: var(--text);
+    }
+    .scroll-cue__line {
+      width: 1px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.16);
+      position: relative;
+      overflow: hidden;
+    }
+    .scroll-cue__line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #ffffff;
+      animation: scrollPulse 2.8s var(--ease-silk) infinite;
+    }
+    @keyframes scrollPulse {
+      0%   { transform: translateY(-100%); opacity: 0; }
+      40%  { opacity: 1; }
+      100% { transform: translateY(200%); opacity: 0; }
+    }
+
+    /* 3. Works Section & Glass Folders */
+    .works-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 68px;
+    }
+    .works-heading-wrap {
+      display: inline-block;
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2.5rem, 5.2vw, 4.2rem);
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      color: var(--text);
+    }
+    /* Animation 3: Works heading blur-to-sharp with drawn underline */
+    .works-header .section-title,
+    .works-header .works-subtitle,
+    .works-header .eyebrow {
+      opacity: 0;
+      filter: blur(12px);
+      transform: translateY(14px);
+      transition:
+        opacity 1.05s var(--ease-silk),
+        filter 1.05s var(--ease-silk),
+        transform 1.05s var(--ease-silk);
+    }
+    .works-header .works-subtitle {
+      transition-delay: 0.12s;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 300;
+    }
+    .works-underline {
+      display: block;
+      width: 100%;
+      height: 1px;
+      margin-top: 12px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 1.15s var(--ease-silk) 0.2s;
+    }
+    .works-header.is-revealed .section-title,
+    .works-header.is-revealed .works-subtitle,
+    .works-header.is-revealed .eyebrow {
+      opacity: 1;
+      filter: blur(0px);
+      transform: translateY(0);
+    }
+    .works-header.is-revealed .works-underline {
+      transform: scaleX(1);
+    }
+
+    /* Responsive Centered Flex-Wrap Grid for Folders */
+    .folders-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(32px, 4.5vw, 56px);
+      padding-top: 28px;
+      padding-bottom: 24px;
+    }
+
+    /* 340x272 Stage scaled by --k = min(1, (viewport width - 40)/340) */
+    .folder-slot {
+      width: calc(340px * var(--k));
+      height: calc(272px * var(--k));
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+    }
+
+    .folder-stage {
+      width: 340px;
+      height: 272px;
+      position: relative;
+      transform: scale(var(--k));
+      transform-origin: center center;
+      transform-style: preserve-3d;
+      --px: 0;
+      --py: 0;
+    }
+
+    .folder {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 26px;
+      transition: transform 1.05s var(--ease-silk);
+      transform:
+        rotateY(calc(var(--px) * 5deg))
+        rotateX(calc(var(--py) * -5deg));
+    }
+
+    /* Folder Assemble Entrance (Animation 3 for folders) */
+    .folder-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 26px;
+      background: linear-gradient(165deg, #2a2a2e 0%, #121214 100%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow:
+        0 32px 64px rgba(0, 0, 0, 0.82),
+        0 8px 24px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      overflow: hidden;
+      transform-origin: center bottom;
+      opacity: 0;
+      transform: translate3d(0, 38px, -16px) scale(0.96);
+      transition:
+        transform 1.1s var(--ease-silk),
+        opacity 1.1s var(--ease-silk),
+        border-color 0.6s var(--ease-silk),
+        box-shadow 0.8s var(--ease-silk);
+    }
+
+    /* Folder top-left tab silhouette inside back panel */
+    .folder-back::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 132px;
+      height: 28px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02));
+      border-bottom-right-radius: 16px;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .folder-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      filter: blur(10px);
+      mix-blend-mode: screen;
+      transition: opacity 1.2s var(--ease-silk), filter 1.2s var(--ease-silk);
+      pointer-events: none;
+    }
+    .folder-canvas.is-painted {
+      opacity: 0.42;
+      filter: blur(0px);
+    }
+
+    .folder-back__vignette {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.12), transparent 55%),
+        linear-gradient(180deg, rgba(5, 5, 6, 0.1) 0%, rgba(5, 5, 6, 0.68) 100%);
+      pointer-events: none;
+    }
+
+    /* Sheets Stack Container */
+    .folder-sheets {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 22px;
+      height: 204px;
+      transform-style: preserve-3d;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate3d(0, -34px, 0);
+      transition: opacity 1.05s var(--ease-silk) 0.12s, transform 1.05s var(--ease-silk) 0.12s;
+    }
+
+    /* Individual Black Sheet */
+    .sheet {
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      background: linear-gradient(170deg, #0c0c0e 0%, #050506 100%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow:
+        0 16px 36px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform-origin: center bottom;
+      cursor: pointer;
+      pointer-events: none;
+      will-change: transform, opacity;
+      /* Depth stagger of 70ms per sheet (--depth) */
+      transition:
+        transform 1.08s var(--ease-silk) calc(var(--depth, 0) * 70ms),
+        box-shadow 0.55s var(--ease-silk),
+        border-color 0.55s var(--ease-silk),
+        opacity 0.6s var(--ease-silk);
+      /* Rest position inside closed folder */
+      transform:
+        translate3d(0, calc(var(--depth, 0) * -7px), calc((2 - var(--depth, 0)) * 2px))
+        scale(calc(1 - var(--depth, 0) * 0.025))
+        rotateZ(0deg);
+    }
+
+    .sheet__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .sheet__date {
+      font-family: var(--font-sans);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .sheet__title {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: right;
+      margin-left: auto;
+    }
+
+    /* Glass Pill on Selected Sheet (Animation 8) */
+    .sheet__pill-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: auto;
+      padding-bottom: 4px;
+      pointer-events: none;
+    }
+    .sheet__pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      color: var(--text);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+      transition: opacity 0.4s var(--ease-silk), transform 0.4s var(--ease-silk);
+    }
+
+    /* Front Glass Panel */
+    .folder-front {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 226px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.085) 0%, rgba(18, 18, 22, 0.56) 100%);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow:
+        0 20px 44px rgba(0, 0, 0, 0.65),
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.34),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+      transform-origin: center bottom;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px 26px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translate3d(0, 44px, 14px) rotateX(0deg);
+      transition:
+        transform 1.08s var(--ease-silk) 0.18s,
+        opacity 1.08s var(--ease-silk) 0.18s,
+        border-color 0.6s var(--ease-silk),
+        box-shadow 0.8s var(--ease-silk);
+      will-change: transform, opacity;
+    }
+
+    /* Subtle diagonal glass sheen on front pocket */
+    .folder-front::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        125deg,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.03) 36%,
+        transparent 62%
+      );
+      pointer-events: none;
+    }
+
+    .folder-label {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+    }
+    .folder-label__title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .folder-label__count {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Assembled State via IntersectionObserver */
+    .folder-slot.is-assembled .folder-back {
+      opacity: 1;
+      transform: translate3d(0, 0, -16px) scale(1);
+    }
+    .folder-slot.is-assembled .folder-sheets {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    .folder-slot.is-assembled .folder-front {
+      opacity: 1;
+      transform: translate3d(0, 0, 14px) rotateX(0deg);
+      transition-delay: 0s;
+    }
+
+    /* Animation 6: Folder Hover (when closed) */
+    @media (hover: hover) {
+      .folder-slot.is-assembled .folder:not(.is-open):hover .folder-front {
+        transform: translate3d(0, 0, 16px) rotateX(-16deg);
+        border-color: rgba(255, 255, 255, 0.26);
+      }
+      .folder-slot.is-assembled .folder:not(.is-open):hover .sheet {
+        transform:
+          translate3d(calc(var(--fan-x, 0px) * 0.28), calc(-18px - var(--depth, 0) * 10px), calc((2 - var(--depth, 0)) * 4px))
+          scale(calc(1 - var(--depth, 0) * 0.015))
+          rotateZ(calc(var(--fan-r, 0deg) * 0.3));
+      }
+    }
+
+    /* Animation 7: Folder Open */
+    .folder-slot.is-assembled .folder.is-open .folder-back {
+      border-color: rgba(255, 255, 255, 0.24);
+      box-shadow:
+        0 40px 80px rgba(0, 0, 0, 0.9),
+        0 0 36px rgba(255, 255, 255, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+    .folder-slot.is-assembled .folder.is-open .folder-front {
+      transform: translate3d(0, 4px, 22px) rotateX(-38deg);
+      border-color: rgba(255, 255, 255, 0.28);
+      box-shadow:
+        0 28px 54px rgba(0, 0, 0, 0.78),
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.45);
+    }
+    .folder-slot.is-assembled .folder.is-open .folder-sheets {
+      pointer-events: auto;
+    }
+    .folder-slot.is-assembled .folder.is-open .sheet {
+      pointer-events: auto;
+      transform:
+        translate3d(var(--fan-x, 0px), var(--fan-y, -58px), calc((3 - var(--depth, 0)) * 8px))
+        scale(1)
+        rotateZ(var(--fan-r, 0deg));
+    }
+
+    /* Subtle hover on individual open sheet */
+    @media (hover: hover) {
+      .folder-slot.is-assembled .folder.is-open .sheet:not(.is-selected):hover {
+        border-color: rgba(255, 255, 255, 0.32);
+      }
+    }
+
+    /* Animation 8: Sheet Select (first tap) */
+    .folder-slot.is-assembled .folder.is-open .sheet.is-selected {
+      z-index: 20;
+      transition-delay: 0ms;
+      transform:
+        translate3d(calc(var(--fan-x, 0px) * 0.35), calc(var(--fan-y, -58px) - 24px), 34px)
+        scale(1.05)
+        rotateZ(0deg);
+      border-color: rgba(255, 255, 255, 0.75);
+      box-shadow:
+        0 24px 52px rgba(0, 0, 0, 0.92),
+        0 0 0 1px rgba(255, 255, 255, 0.45),
+        0 0 28px rgba(255, 255, 255, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.42);
+    }
+    .folder-slot.is-assembled .folder.is-open .sheet.is-selected .sheet__pill {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Animation 9: Sheet Open (second tap) */
+    .folder-slot.is-assembled .folder.is-open .sheet.is-launching {
+      transition-duration: 0.6s;
+      transition-delay: 0ms;
+      transform:
+        translate3d(0, -110px, 60px)
+        scale(1.16)
+        rotateZ(0deg);
+      opacity: 0;
+    }
+
+    /* 4. About Section (Clip-Path Wipe from Left + Parallax Glass Panel) */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+    @media (min-width: 860px) {
+      .about-grid {
+        grid-template-columns: 1.35fr 0.85fr;
+        gap: 40px;
+      }
+    }
+
+    .about-panel {
+      position: relative;
+      border-radius: 28px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      border: 1px solid var(--hairline);
+      box-shadow:
+        0 28px 64px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      padding: clamp(32px, 5vw, 56px);
+      overflow: hidden;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.25s var(--ease-silk);
+      will-change: clip-path;
+    }
+    .about-section.is-revealed .about-panel {
+      clip-path: inset(0 0% 0 0);
+    }
+
+    .about-copy {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(1.4rem, 2.3vw, 1.95rem);
+      line-height: 1.48;
+      color: var(--text);
+      margin-bottom: 36px;
+    }
+    .about-signature {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid var(--hairline-soft);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .about-signature__name {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+    .about-signature__origin {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Parallax Image-less Glass Monolith Panel */
+    .about-monolith {
+      position: relative;
+      min-height: 300px;
+      border-radius: 28px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.04) 0%, rgba(18, 18, 22, 0.5) 100%);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      border: 1px solid var(--hairline);
+      box-shadow:
+        0 28px 64px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.25s var(--ease-silk) 0.16s;
+      --parallax-y: 0px;
+    }
+    .about-section.is-revealed .about-monolith {
+      clip-path: inset(0 0% 0 0);
+    }
+    .monolith-layer {
+      position: absolute;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.01));
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      will-change: transform;
+    }
+    .monolith-layer--1 {
+      width: 66%;
+      height: 68%;
+      transform: translate3d(-10px, calc(var(--parallax-y) * -0.6), 0) rotate(-4deg);
+    }
+    .monolith-layer--2 {
+      width: 58%;
+      height: 60%;
+      transform: translate3d(16px, calc(var(--parallax-y) * 0.85), 0) rotate(5deg);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+    .monolith-axis {
+      position: absolute;
+      width: 1px;
+      height: 76%;
+      background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: translate3d(0, calc(var(--parallax-y) * 0.4), 0);
+    }
+
+    /* 5. Services Section (Staggered Rise + Light Sweep) */
+    .section-head {
+      margin-bottom: 52px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 820px) {
+      .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .tilt-card {
+      --rx: 0deg;
+      --ry: 0deg;
+      --hx: 50%;
+      --hy: 50%;
+      position: relative;
+      border-radius: 24px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      border: 1px solid var(--hairline);
+      box-shadow:
+        0 24px 52px rgba(0, 0, 0, 0.52),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
+      transition:
+        transform 0.55s var(--ease-silk),
+        border-color 0.55s var(--ease-silk),
+        box-shadow 0.55s var(--ease-silk);
+      will-change: transform;
+    }
+    .tilt-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        380px circle at var(--hx) var(--hy),
+        rgba(255, 255, 255, 0.09),
+        transparent 65%
+      );
+      opacity: 0;
+      transition: opacity 0.5s var(--ease-silk);
+      pointer-events: none;
+    }
+    @media (hover: hover) {
+      .tilt-card:hover {
+        border-color: rgba(255, 255, 255, 0.24);
+      }
+      .tilt-card:hover::before {
+        opacity: 1;
+      }
+    }
+
+    .service-card {
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 240px;
+      opacity: 0;
+      transform: perspective(1000px) translateY(38px) rotateX(var(--rx)) rotateY(var(--ry));
+      transition:
+        opacity 1.05s var(--ease-silk) calc(var(--idx, 0) * 140ms),
+        transform 1.05s var(--ease-silk) calc(var(--idx, 0) * 140ms),
+        border-color 0.5s var(--ease-silk);
+    }
+    .services-section.is-revealed .service-card {
+      opacity: 1;
+      transform: perspective(1000px) translateY(0) rotateX(var(--rx)) rotateY(var(--ry));
+    }
+
+    /* Light sweep across each service card on reveal */
+    .service-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 55%;
+      height: 100%;
+      background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.14) 50%,
+        transparent 100%
+      );
+      transform: translateX(-180%) skewX(-18deg);
+      transition: transform 1.25s var(--ease-silk) calc(0.25s + var(--idx, 0) * 160ms);
+      pointer-events: none;
+    }
+    .services-section.is-revealed .service-card::after {
+      transform: translateX(340%) skewX(-18deg);
+    }
+
+    .service-card__index {
+      font-family: var(--font-sans);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      margin-bottom: 28px;
+    }
+    .service-card__title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.85rem;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .service-card__desc {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* 6. Contact Section (Buttons scale from 0.96 with soft glow + Magnetic + Sweep + Ripple) */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 36px;
+    }
+    @media (min-width: 820px) {
+      .contact-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .magnetic-btn {
+      --mx: 0px;
+      --my: 0px;
+      position: relative;
+       overflow: hidden;
+      transform: translate3d(var(--mx), var(--my), 0);
+      transition:
+        transform 0.45s var(--ease-silk),
+        border-color 0.45s var(--ease-silk),
+        box-shadow 0.55s var(--ease-silk),
+        background-color 0.45s var(--ease-silk);
+      will-change: transform;
+    }
+    /* White light sweep across glass on hover */
+    .magnetic-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.16) 50%,
+        transparent 100%
+      );
+      transform: translateX(-180%) skewX(-20deg);
+      transition: transform 0.85s var(--ease-silk);
+      pointer-events: none;
+    }
+    @media (hover: hover) {
+      .magnetic-btn:hover::before {
+        transform: translateX(360%) skewX(-20deg);
+      }
+      .magnetic-btn:hover {
+        border-color: rgba(255, 255, 255, 0.32);
+        box-shadow:
+          0 24px 48px rgba(0, 0, 0, 0.65),
+          0 0 28px rgba(255, 255, 255, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.34);
+      }
+    }
+
+    /* Soft tap ripple */
+    .btn-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.28) 0%, transparent 70%);
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+      pointer-events: none;
+      animation: rippleSpread 0.75s var(--ease-silk) forwards;
+    }
+    @keyframes rippleSpread {
+      0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
+      100% { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
+    }
+
+    .contact-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 158px;
+      padding: 28px 30px;
+      border-radius: 24px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      border: 1px solid var(--hairline);
+      box-shadow:
+        0 20px 44px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      color: var(--text);
+      opacity: 0;
+      transform: translate3d(var(--mx), var(--my), 0) scale(0.96);
+      transition:
+        opacity 0.95s var(--ease-silk) calc(var(--idx, 0) * 120ms),
+        transform 0.95s var(--ease-silk) calc(var(--idx, 0) * 120ms),
+        border-color 0.45s var(--ease-silk),
+        box-shadow 0.65s var(--ease-silk);
+    }
+    .contact-section.is-revealed .contact-btn {
+      opacity: 1;
+      transform: translate3d(var(--mx), var(--my), 0) scale(1);
+      box-shadow:
+        0 22px 48px rgba(0, 0, 0, 0.58),
+        0 0 24px rgba(255, 255, 255, 0.055),
+        inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    }
+    .contact-section.is-revealed .contact-btn:hover {
+      transition-delay: 0s;
+    }
+
+    .contact-btn__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .contact-btn__icon {
+      width: 22px;
+      height: 22px;
+      color: var(--text);
+      opacity: 0.9;
+    }
+    .contact-btn__label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .contact-btn__value {
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 2vw, 1.65rem);
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .contact-btn__value--tabular {
+      font-family: var(--font-sans);
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+      font-weight: 400;
+      letter-spacing: 0.03em;
+    }
+
+    .contact-phone-note {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 18px 24px;
+      border-radius: 16px;
+      border: 1px solid var(--hairline-soft);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .contact-phone-note__num {
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    /* 7. Payment Details Section (Cards flip in on X axis slowly) */
+    .payments-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      perspective: 1200px;
+    }
+    @media (min-width: 780px) {
+      .payments-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .bank-card {
+      position: relative;
+      border-radius: 26px;
+      padding: clamp(26px, 4vw, 36px);
+      min-height: 236px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(18, 18, 22, 0.72) 52%, rgba(8, 8, 10, 0.9) 100%);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow:
+        0 28px 60px rgba(0, 0, 0, 0.72),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      transform-origin: center top;
+      opacity: 0;
+      transform: perspective(1000px) rotateX(24deg) translateY(24px);
+      transition:
+        opacity 1.15s var(--ease-silk) calc(var(--idx, 0) * 160ms),
+        transform 1.15s var(--ease-silk) calc(var(--idx, 0) * 160ms),
+        border-color 0.5s var(--ease-silk);
+    }
+    .payments-section.is-revealed .bank-card {
+      opacity: 1;
+      transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(0);
+    }
+    .payments-section.is-revealed .bank-card:hover {
+      transition-delay: 0s;
+    }
+
+    .bank-card__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .bank-card__bank {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .bank-card__chip {
+      width: 34px;
+      height: 24px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03));
+      position: relative;
+    }
+    .bank-card__chip::after {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 3px;
+    }
+
+    .bank-card__number {
+      margin: 28px 0 22px;
+      font-family: var(--font-sans);
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--text);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45em;
+    }
+    .digit-group {
+      display: inline-flex;
+    }
+    .digit-char {
+      display: inline-block;
+      min-width: 0.62em;
+      text-align: center;
+      transition:
+        opacity 0.38s var(--ease-silk),
+        filter 0.38s var(--ease-silk),
+        transform 0.38s var(--ease-silk);
+    }
+    .digit-char.is-morphing {
+      opacity: 0;
+      filter: blur(5px);
+      transform: translateY(-4px);
+    }
+
+    .bank-card__holder {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .bank-card__actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .glass-action-btn {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-family: var(--font-sans);
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .glass-action-btn svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    /* Animation 10: Copy button stroke-by-stroke tick */
+    .copy-btn__icon-wrap {
+      position: relative;
+      width: 15px;
+      height: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .copy-icon,
+    .tick-icon {
+      position: absolute;
+      inset: 0;
+      transition: opacity 0.35s var(--ease-silk), transform 0.35s var(--ease-silk);
+    }
+    .tick-icon {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    .tick-icon path {
+      stroke-dasharray: 24;
+      stroke-dashoffset: 24;
+      transition: stroke-dashoffset 0.45s var(--ease-silk) 0.08s;
+    }
+    .glass-action-btn.is-copied .copy-icon {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    .glass-action-btn.is-copied .tick-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .glass-action-btn.is-copied .tick-icon path {
+      stroke-dashoffset: 0;
+    }
+    .copy-btn__label {
+      transition: opacity 0.3s var(--ease-silk), filter 0.3s var(--ease-silk);
+    }
+    .copy-btn__label.is-morphing {
+      opacity: 0;
+      filter: blur(4px);
+    }
+
+    /* 8. Footer */
+    .site-footer {
+      position: relative;
+      z-index: 3;
+      border-top: 1px solid var(--hairline-soft);
+      padding: 56px 0 64px;
+    }
+    .footer__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    @media (min-width: 720px) {
+      .footer__inner {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+    .footer__brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .footer__logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    .footer__brand .logo-fallback {
+      font-size: 1.5rem;
+    }
+    .footer__tagline {
+      font-size: 0.875rem;
+      color: var(--muted);
+      max-width: 380px;
+      font-weight: 300;
+    }
+    .footer__copy {
+      font-size: 0.78rem;
+      color: var(--dim);
+      letter-spacing: 0.06em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        transition-delay: 0ms !important;
+        scroll-behavior: auto !important;
+      }
+      .intro-curtain {
+        display: none !important;
+      }
+      .orb {
+        animation: none !important;
+      }
+      .film-grain {
+        display: none !important;
+      }
+      .char-inner,
+      .line-inner,
+      .works-header .section-title,
+      .works-header .works-subtitle,
+      .works-header .eyebrow,
+      .service-card,
+      .contact-btn,
+      .bank-card {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+      }
+      .works-underline {
+        transform: scaleX(1) !important;
+      }
+      .about-panel,
+      .about-monolith {
+        clip-path: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link" data-i18n-node data-i18n="skipLink">Skip to content</a>
+
+  <!-- Hairline Scroll Progress Bar -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Background Atmosphere: Drifting Orbs, Spotlight, Film Grain -->
+  <div class="atmosphere" aria-hidden="true">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+  </div>
+  <div class="cursor-spotlight" aria-hidden="true"></div>
+  <svg class="film-grain" aria-hidden="true">
+    <filter id="marble-grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="saturate" values="0" />
+    </filter>
+    <rect width="100%" height="100%" filter="url(#marble-grain)" />
+  </svg>
+
+  <!-- 1. First-Load Intro Curtain -->
+  <div class="intro-curtain" id="intro-curtain" aria-hidden="true">
+    <div class="intro-inner">
+      <div class="intro-logo-wrap">
+        <img src="logo.png" alt="AbdurSolo" class="intro-logo-img js-logo-img" />
+        <span class="logo-fallback">AbdurSolo</span>
+      </div>
+      <div class="intro-line"></div>
+    </div>
+  </div>
+
+  <!-- Animation 9: Project Launch Curtain -->
+  <div class="project-curtain" id="project-curtain" aria-hidden="true">
+    <span class="project-curtain__eyebrow" id="project-curtain-eyebrow">Opening</span>
+    <div class="project-curtain__title" id="project-curtain-title"></div>
+  </div>
+
+  <!-- Animation 11: Toasts -->
+  <div class="toast-layer" id="toast-layer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- 1. Top Bar -->
+  <header class="topbar" id="topbar">
+    <div class="topbar__inner">
+      <a href="#top" class="brand-link" aria-label="AbdurSolo">
+        <img src="logo.png" alt="AbdurSolo" class="brand-logo js-logo-img" />
+        <span class="logo-fallback">AbdurSolo</span>
+      </a>
+
+      <div class="lang-switch" id="lang-switch" role="group" aria-label="Language switcher" data-active-lang="en">
+        <div class="lang-switch__thumb" aria-hidden="true"></div>
+        <button type="button" class="lang-switch__btn" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" class="lang-switch__btn" data-lang="ru" aria-pressed="false">RU</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- 2. Hero Section -->
+    <section class="hero container" id="top">
+      <div class="hero__content">
+        <div class="hero__meta">
+          <span class="hero__meta-dot" aria-hidden="true"></span>
+          <span class="eyebrow" style="margin-bottom:0" data-i18n-node data-i18n="origin">From Russia</span>
+        </div>
+
+        <h1 class="hero__title" id="hero-title" aria-label="AbdurSolo"></h1>
+
+        <div class="line-mask">
+          <p class="hero__tagline line-inner" style="transition-delay: 0.35s" data-i18n-node data-i18n="tagline">
+            Designer and developer of websites and Telegram bots from Russia
+          </p>
+        </div>
+
+        <div class="line-mask">
+          <p class="hero__intro line-inner" style="transition-delay: 0.48s" data-i18n-node data-i18n="heroIntro">
+            Crafting quiet, resilient websites, Telegram bots, and applications where architecture, typography, and motion work in calm harmony.
+          </p>
+        </div>
+
+        <a href="#works" class="hero__scroll-cue">
+          <span class="scroll-cue__line" aria-hidden="true"></span>
+          <span data-i18n-node data-i18n="scrollCue">Explore works</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- 3. Works Section (Three Monochrome Glass Folders) -->
+    <section id="works" aria-labelledby="works-title">
+      <div class="container">
+        <div class="works-header" id="works-header">
+          <span class="eyebrow" data-i18n-node data-i18n="worksEyebrow">Selected Archive</span>
+          <div class="works-heading-wrap">
+            <h2 class="section-title" id="works-title" data-i18n-node data-i18n="worksTitle">Works</h2>
+            <span class="works-underline" aria-hidden="true"></span>
+          </div>
+          <p class="works-subtitle" data-i18n-node data-i18n="worksHint">Open a folder, tap a sheet twice.</p>
+        </div>
+
+        <div class="folders-grid" id="folders-grid"></div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- 4. About Section -->
+    <section class="about-section" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n-node data-i18n="aboutEyebrow">Philosophy</span>
+          <h2 class="section-title" id="about-title" data-i18n-node data-i18n="aboutTitle">About</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-panel">
+            <p class="about-copy" data-i18n-node data-i18n="aboutCopy">
+              I design and build clean websites, Telegram bots, and digital applications with quiet precision. Every interface is shaped around clarity, tactile motion, and clean engineering—free of visual noise so every detail feels intentional and enduring.
+            </p>
+            <div class="about-signature">
+              <span class="about-signature__name">AbdurSolo</span>
+              <span class="about-signature__origin" data-i18n-node data-i18n="origin">From Russia</span>
+            </div>
+          </div>
+
+          <div class="about-monolith" id="about-monolith" aria-hidden="true">
+            <div class="monolith-layer monolith-layer--1"></div>
+            <div class="monolith-layer monolith-layer--2"></div>
+            <div class="monolith-axis"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- 5. Services Section -->
+    <section class="services-section" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n-node data-i18n="servicesEyebrow">Capabilities</span>
+          <h2 class="section-title" id="services-title" data-i18n-node data-i18n="servicesTitle">Services</h2>
+        </div>
+
+        <div class="services-grid">
+          <article class="tilt-card service-card" style="--idx: 0">
+            <span class="service-card__index">01</span>
+            <div>
+              <h3 class="service-card__title" data-i18n-node data-i18n="srvWebTitle">Websites</h3>
+              <p class="service-card__desc" data-i18n-node data-i18n="srvWebDesc">
+                Bespoke websites designed from the ground up with refined typography, fluid responsiveness, and clean code.
+              </p>
+            </div>
+          </article>
+
+          <article class="tilt-card service-card" style="--idx: 1">
+            <span class="service-card__index">02</span>
+            <div>
+              <h3 class="service-card__title" data-i18n-node data-i18n="srvBotTitle">Telegram bots</h3>
+              <p class="service-card__desc" data-i18n-node data-i18n="srvBotDesc">
+                Thoughtfully structured Telegram bots for automation, customer workflows, and seamless service logic.
+              </p>
+            </div>
+          </article>
+
+          <article class="tilt-card service-card" style="--idx: 2">
+            <span class="service-card__index">03</span>
+            <div>
+              <h3 class="service-card__title" data-i18n-node data-i18n="srvAppTitle">Apps</h3>
+              <p class="service-card__desc" data-i18n-node data-i18n="srvAppDesc">
+                Focused web and Telegram mini-applications built for speed, intuitive interaction, and visual calm.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- 6. Contact Section -->
+    <section class="contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n-node data-i18n="contactEyebrow">Direct Line</span>
+          <h2 class="section-title" id="contact-title" data-i18n-node data-i18n="contactTitle">Contact</h2>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Telegram -->
+          <a
+            href="https://t.me/AbdurSolo"
+            target="_blank"
+            rel="noopener"
+            class="contact-btn magnetic-btn"
+            style="--idx: 0"
+          >
+            <div class="contact-btn__top">
+              <span class="contact-btn__label">Telegram</span>
+              <svg class="contact-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21.5 3.5L2.5 11l7 2.8M21.5 3.5l-6 17-6-6.7M21.5 3.5L9.5 13.8m0 0v5.2l3.2-3.3" />
+              </svg>
+            </div>
+            <span class="contact-btn__value">@AbdurSolo</span>
+          </a>
+
+          <!-- WhatsApp -->
+          <a
+            href="https://wa.me/79778994247?text=Hello%2C%20AbdurSolo.%20I%20would%20like%20to%20discuss%20a%20project."
+            target="_blank"
+            rel="noopener"
+            id="whatsapp-link"
+            class="contact-btn magnetic-btn"
+            style="--idx: 1"
+          >
+            <div class="contact-btn__top">
+              <span class="contact-btn__label">WhatsApp</span>
+              <svg class="contact-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
+                <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
+              </svg>
+            </div>
+            <span class="contact-btn__value contact-btn__value--tabular">+7 977 899 42 47</span>
+          </a>
+
+          <!-- Phone -->
+          <a
+            href="tel:+79778994247"
+            class="contact-btn magnetic-btn"
+            style="--idx: 2"
+          >
+            <div class="contact-btn__top">
+              <span class="contact-btn__label" data-i18n-node data-i18n="phoneLabel">Phone</span>
+              <svg class="contact-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+            </div>
+            <span class="contact-btn__value contact-btn__value--tabular">+7 977 899 42 47</span>
+          </a>
+        </div>
+
+        <div class="contact-phone-note">
+          <span data-i18n-node data-i18n="directPhoneText">Direct telephone &amp; messengers</span>
+          <span class="contact-phone-note__num">+7 977 899 42 47</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" id="payments-divider" aria-hidden="true"></div>
+
+    <!-- 7. Payment Details Section -->
+    <section class="payments-section" id="payments-section" aria-labelledby="payments-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n-node data-i18n="paymentsEyebrow">Transfers</span>
+          <h2 class="section-title" id="payments-title" data-i18n-node data-i18n="paymentsTitle">Payment details</h2>
+        </div>
+
+        <div class="payments-grid" id="payments-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 8. Footer -->
+  <footer class="site-footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img src="logo.png" alt="AbdurSolo" class="footer__logo js-logo-img" />
+        <span class="logo-fallback">AbdurSolo</span>
+        <p class="footer__tagline" data-i18n-node data-i18n="tagline">
+          Designer and developer of websites and Telegram bots from Russia
+        </p>
+      </div>
+      <div class="footer__copy">
+        &copy; <span id="footer-year"></span> AbdurSolo
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* =========================================================================
+       * 1. SINGLE CONFIG OBJECT (All editable content lives here)
+       * ========================================================================= */
+      const CONFIG = {
+        brand: 'AbdurSolo',
+        telegramUrl: 'https://t.me/AbdurSolo',
+        phoneDisplay: '+7 977 899 42 47',
+        phoneRaw: '79778994247',
+        cardholderName: '', // Empty by default; hidden when empty
+        folders: [
+          {
+            id: 'websites',
+            seed: 109,
+            flowAngle: 0.42,
+            works: [
+              {
+                id: 'work-royal-nj',
+                date: '25.10.2026',
+                title: 'Royal N.J Hotel & Resort',
+                link: 'https://abagaga116-maker.github.io/Royal-NJ-Hotel/'
+              },
+              {
+                id: 'work-performance-gym',
+                date: '25.10.2026',
+                title: 'Performance Gym',
+                link: 'https://abagaga116-maker.github.io/Performance-gym/'
+              }
+            ]
+          },
+          {
+            id: 'bots',
+            seed: 247,
+            flowAngle: 1.18,
+            works: []
+          },
+          {
+            id: 'apps',
+            seed: 389,
+            flowAngle: 2.05,
+            works: []
+          }
+        ],
+        payments: [
+          {
+            id: 'tbank',
+            bankKey: 'bankTbank',
+            number: '2200 7020 4246 5521'
+          },
+          {
+            id: 'alif',
+            bankKey: 'bankAlif',
+            number: '4444 8888 1616 5496'
+          }
+        ]
+      };
+
+      /* =========================================================================
+       * 2. SINGLE TRANSLATIONS OBJECT (EN & RU only)
+       * ========================================================================= */
+      const TRANSLATIONS = {
+        en: {
+          docTitle: 'AbdurSolo — Designer and developer of websites and Telegram bots from Russia',
+          metaDesc: 'AbdurSolo — Designer and developer of websites, Telegram bots and applications from Russia. Quiet architecture, clean code, and meticulous attention to detail.',
+          ogLocale: 'en_US',
+          skipLink: 'Skip to content',
+          origin: 'From Russia',
+          tagline: 'Designer and developer of websites and Telegram bots from Russia',
+          heroIntro: 'Crafting quiet, resilient websites, Telegram bots, and applications where architecture, typography, and motion work in calm harmony.',
+          scrollCue: 'Explore works',
+          worksEyebrow: 'Selected Archive',
+          worksTitle: 'Works',
+          worksHint: 'Open a folder, tap a sheet twice.',
+          folderNames: {
+            websites: 'Websites',
+            bots: 'Bots',
+            apps: 'Apps'
+          },
+          comingSoon: 'Coming soon',
+          tapAgain: 'Tap again to open',
+          linkComingSoon: 'Link coming soon',
+          openingProject: 'Opening',
+          aboutEyebrow: 'Philosophy',
+          aboutTitle: 'About',
+          aboutCopy: 'I design and build clean websites, Telegram bots, and digital applications with quiet precision. Every interface is shaped around clarity, tactile motion, and clean engineering—free of visual noise so every detail feels intentional and enduring.',
+          servicesEyebrow: 'Capabilities',
+          servicesTitle: 'Services',
+          srvWebTitle: 'Websites',
+          srvWebDesc: 'Bespoke websites designed from the ground up with refined typography, fluid responsiveness, and clean code.',
+          srvBotTitle: 'Telegram bots',
+          srvBotDesc: 'Thoughtfully structured Telegram bots for automation, customer workflows, and seamless service logic.',
+          srvAppTitle: 'Apps',
+          srvAppDesc: 'Focused web and Telegram mini-applications built for speed, intuitive interaction, and visual calm.',
+          contactEyebrow: 'Direct Line',
+          contactTitle: 'Contact',
+          phoneLabel: 'Phone',
+          directPhoneText: 'Direct telephone & messengers',
+          whatsappGreeting: 'Hello, AbdurSolo. I would like to discuss a project.',
+          paymentsEyebrow: 'Transfers',
+          paymentsTitle: 'Payment details',
+          bankTbank: 'T-Bank',
+          bankAlif: 'Visa, Alif Bank',
+          showNumber: 'Show',
+          hideNumber: 'Hide',
+          copyNumber: 'Copy',
+          copiedNumber: 'Copied',
+          toastCopied: 'Card number copied to clipboard',
+          formatWorksCount(n) {
+            return n === 1 ? '1 work' : `${n} works`;
+          },
+          folderAriaLabel(name, countStr, isOpen) {
+            return `${name} folder, ${countStr}. ${isOpen ? 'Expanded' : 'Collapsed'}.`;
+          }
+        },
+        ru: {
+          docTitle: 'AbdurSolo — Дизайнер и разработчик сайтов и Telegram-ботов из России',
+          metaDesc: 'AbdurSolo — Дизайнер и разработчик сайтов, Telegram-ботов и приложений из России. Чистая архитектура, выверенный код и внимание к каждой детали.',
+          ogLocale: 'ru_RU',
+          skipLink: 'Перейти к содержимому',
+          origin: 'Из России',
+          tagline: 'Дизайнер и разработчик сайтов и Telegram-ботов из России',
+          heroIntro: 'Создаю выверенные сайты, Telegram-боты и приложения, в которых архитектура, типографика и плавная динамика звучат в едином ритме.',
+          scrollCue: 'Смотреть работы',
+          worksEyebrow: 'Избранный архив',
+          worksTitle: 'Работы',
+          worksHint: 'Откройте папку и дважды нажмите на лист.',
+          folderNames: {
+            websites: 'Сайты',
+            bots: 'Боты',
+            apps: 'Приложения'
+          },
+          comingSoon: 'Скоро здесь появятся работы',
+          tapAgain: 'Нажмите ещё раз, чтобы открыть',
+          linkComingSoon: 'Ссылка скоро появится',
+          openingProject: 'Открывается',
+          aboutEyebrow: 'Философия',
+          aboutTitle: 'Обо мне',
+          aboutCopy: 'Я проектирую и разрабатываю лаконичные веб-сайты, Telegram-боты и приложения с особым вниманием к деталям. Каждый проект строится на чистоте кода, выверенной типографике и тактильной плавности без лишнего визуального шума.',
+          servicesEyebrow: 'Направления',
+          servicesTitle: 'Услуги',
+          srvWebTitle: 'Сайты',
+          srvWebDesc: 'Авторские веб-сайты с выразительной типографикой, выверенной адаптивностью и чистой архитектурой кода.',
+          srvBotTitle: 'Telegram-боты',
+          srvBotDesc: 'Продуманные Telegram-боты для автоматизации процессов, клиентского сервиса и удобной коммуникации.',
+          srvAppTitle: 'Приложения',
+          srvAppDesc: 'Быстрые веб-интерфейсы и мини-приложения в Telegram с интуитивной навигацией и спокойной эстетикой.',
+          contactEyebrow: 'Прямая связь',
+          contactTitle: 'Контакты',
+          phoneLabel: 'Телефон',
+          directPhoneText: 'Прямой телефон и мессенджеры',
+          whatsappGreeting: 'Здравствуйте, AbdurSolo! Хочу обсудить проект.',
+          paymentsEyebrow: 'Переводы',
+          paymentsTitle: 'Реквизиты для оплаты',
+          bankTbank: 'Т-Банк',
+          bankAlif: 'Visa, Alif Bank',
+          showNumber: 'Показать',
+          hideNumber: 'Скрыть',
+          copyNumber: 'Скопировать',
+          copiedNumber: 'Скопировано',
+          toastCopied: 'Номер карты скопирован в буфер обмена',
+          formatWorksCount(n) {
+            const mod10 = n % 10;
+            const mod100 = n % 100;
+            if (mod10 === 1 && mod100 !== 11) return `${n} работа`;
+            if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return `${n} работы`;
+            return `${n} работ`;
+          },
+          folderAriaLabel(name, countStr, isOpen) {
+            return `Папка «${name}», ${countStr}. ${isOpen ? 'Открыта' : 'Закрыта'}.`;
+          }
+        }
+      };
+
+      /* =========================================================================
+       * 3. STATE & REDUCED MOTION DETECTION
+       * ========================================================================= */
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function detectInitialLang() {
+        try {
+          const saved = localStorage.getItem('abdursolo_lang');
+          if (saved === 'en' || saved === 'ru') return saved;
+        } catch (_) {}
+        const navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || 'en').toLowerCase();
+        return navLang.startsWith('ru') ? 'ru' : 'en';
+      }
+
+      let currentLang = detectInitialLang();
+      let openFolderId = null;
+      let selectedSheetId = null;
+      let deselectTimer = null;
+
+      // Keyed DOM references so folders and sheets are NEVER recreated
+      const folderRefs = new Map();
+      const sheetRefs = new Map();
+      const paymentRefs = new Map();
+
+      /* =========================================================================
+       * 4. LOGO FALLBACK HANDLING
+       * ========================================================================= */
+      function initLogoFallbacks() {
+        const imgs = document.querySelectorAll('.js-logo-img');
+        imgs.forEach((img) => {
+          const handleFallback = () => {
+            img.style.display = 'none';
+            const fallback = img.nextElementSibling;
+            if (fallback && fallback.classList.contains('logo-fallback')) {
+              fallback.style.display = 'inline-block';
+            }
+          };
+          img.addEventListener('error', handleFallback);
+          if (img.complete && img.naturalWidth === 0) {
+            handleFallback();
+          }
+        });
+      }
+
+      /* =========================================================================
+       * 5. HERO TITLE LETTER-BY-LETTER BUILDER
+       * ========================================================================= */
+      function buildHeroLetters() {
+        const titleEl = document.getElementById('hero-title');
+        if (!titleEl) return;
+        const name = CONFIG.brand;
+        titleEl.innerHTML = '';
+        for (let i = 0; i < name.length; i++) {
+          const mask = document.createElement('span');
+          mask.className = 'char-mask';
+          mask.setAttribute('aria-hidden', 'true');
+          const inner = document.createElement('span');
+          inner.className = 'char-inner';
+          inner.style.transitionDelay = `${i * 55}ms`;
+          inner.textContent = name[i];
+          mask.appendChild(inner);
+          titleEl.appendChild(mask);
+        }
+      }
+
+      /* =========================================================================
+       * 6. STAGE SCALE (--k = min(1, (viewport width - 40) / 340))
+       * ========================================================================= */
+      function updateStageScale() {
+        const vw = document.documentElement.clientWidth || window.innerWidth;
+        const k = Math.min(1, Math.max(0.68, (vw - 40) / 340));
+        document.documentElement.style.setProperty('--k', k.toFixed(4));
+      }
+
+      /* =========================================================================
+       * 7. MONOCHROME LIQUID MARBLE CANVAS GENERATOR (One per rAF)
+       * ========================================================================= */
+      const canvasQueue = [];
+      let isPaintingCanvas = false;
+
+      function enqueueCanvasPaint(canvas, seed, flowAngle) {
+        canvasQueue.push({ canvas, seed, flowAngle });
+        if (!isPaintingCanvas) {
+          isPaintingCanvas = true;
+          requestAnimationFrame(processCanvasQueue);
+        }
+      }
+
+      function processCanvasQueue() {
+        const item = canvasQueue.shift();
+        if (!item) {
+          isPaintingCanvas = false;
+          return;
+        }
+        paintMonochromeMarble(item.canvas, item.seed, item.flowAngle);
+        item.canvas.classList.add('is-painted');
+        if (canvasQueue.length > 0) {
+          requestAnimationFrame(processCanvasQueue);
+        } else {
+          isPaintingCanvas = false;
+        }
+      }
+
+      function paintMonochromeMarble(canvas, seed, flowAngle) {
+        const w = 170;
+        const h = 136;
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // Strictly monochrome palette stops: ["#050506","#16161a","#2a2a30","#6b6b74","#c9c9d1","#ffffff"]
+        const stops = [
+          [5, 5, 6],
+          [22, 22, 26],
+          [42, 42, 48],
+          [107, 107, 116],
+          [201, 201, 209],
+          [255, 255, 255]
+        ];
+
+        const imgData = ctx.createImageData(w, h);
+        const data = imgData.data;
+        const cosA = Math.cos(flowAngle);
+        const sinA = Math.sin(flowAngle);
+        const s1 = seed * 0.137;
+        const s2 = seed * 0.293;
+
+        for (let y = 0; y < h; y++) {
+          const ny = y / h - 0.5;
+          for (let x = 0; x < w; x++) {
+            const nx = x / w - 0.5;
+            const u = (nx * cosA - ny * sinA) * 4.2;
+            const v = (nx * sinA + ny * cosA) * 4.2;
+
+            // Layered trigonometric domain warping for liquid black marble / chrome veins
+            const warp1 = Math.sin(u * 1.4 + s1 + Math.cos(v * 1.7 - s2));
+            const warp2 = Math.cos(v * 2.1 - s1 + Math.sin((u + v) * 1.6 + warp1 * 1.8));
+            const vein = Math.pow(Math.abs(Math.sin((u * 0.9 + v * 1.1 + warp1 * 1.45 + warp2 * 0.95) * 2.2)), 2.6);
+
+            const t = Math.min(1, Math.max(0, (1 - vein) * 0.88 + (warp2 * 0.5 + 0.5) * 0.12));
+            const scaled = t * (stops.length - 1);
+            const idx = Math.min(stops.length - 2, Math.floor(scaled));
+            const frac = scaled - idx;
+
+            const c0 = stops[idx];
+            const c1 = stops[idx + 1];
+
+            const p = (y * w + x) * 4;
+            data[p] = c0[0] + (c1[0] - c0[0]) * frac;
+            data[p + 1] = c0[1] + (c1[1] - c0[1]) * frac;
+            data[p + 2] = c0[2] + (c1[2] - c0[2]) * frac;
+            data[p + 3] = 255;
+          }
+        }
+        ctx.putImageData(imgData, 0, 0);
+      }
+
+      /* =========================================================================
+       * 8. BUILD GLASS FOLDERS & SHEETS ONCE (Never recreated)
+       * ========================================================================= */
+      function buildFolders() {
+        const grid = document.getElementById('folders-grid');
+        if (!grid) return;
+        const dict = TRANSLATIONS[currentLang];
+
+        CONFIG.folders.forEach((folderCfg, folderIndex) => {
+          const slot = document.createElement('div');
+          slot.className = 'folder-slot';
+          slot.dataset.folderId = folderCfg.id;
+
+          const stage = document.createElement('div');
+          stage.className = 'folder-stage';
+
+          const folderEl = document.createElement('div');
+          folderEl.className = 'folder';
+          folderEl.setAttribute('role', 'button');
+          folderEl.setAttribute('tabindex', '0');
+          folderEl.setAttribute('aria-expanded', 'false');
+
+          // Back Panel + Monochrome Canvas
+          const back = document.createElement('div');
+          back.className = 'folder-back';
+          const canvas = document.createElement('canvas');
+          canvas.className = 'folder-canvas';
+          canvas.setAttribute('aria-hidden', 'true');
+          const vignette = document.createElement('div');
+          vignette.className = 'folder-back__vignette';
+          back.appendChild(canvas);
+          back.appendChild(vignette);
+
+          // Sheets Container (inert while closed)
+          const sheetsWrap = document.createElement('div');
+          sheetsWrap.className = 'folder-sheets';
+          sheetsWrap.setAttribute('inert', '');
+
+          const realCount = folderCfg.works.length;
+          const itemsToRender = realCount > 0
+            ? folderCfg.works.map((w) => ({ ...w, isPlaceholder: false }))
+            : [{ id: `${folderCfg.id}-placeholder`, date: '', title: '', link: '', isPlaceholder: true }];
+
+          const totalSheets = itemsToRender.length;
+
+          itemsToRender.forEach((item, idx) => {
+            const sheetEl = document.createElement('div');
+            sheetEl.className = 'sheet';
+            sheetEl.dataset.sheetId = item.id;
+            sheetEl.dataset.folderId = folderCfg.id;
+            sheetEl.setAttribute('role', 'button');
+            sheetEl.setAttribute('tabindex', '-1');
+
+            // Depth and fan geometry
+            const depth = totalSheets - 1 - idx;
+            let fanX = 0;
+            let fanY = -62;
+            let fanR = 0;
+            if (totalSheets === 2) {
+              fanX = idx === 0 ? -24 : 24;
+              fanY = idx === 0 ? -74 : -50;
+              fanR = idx === 0 ? -5.5 : 5.5;
+            } else if (totalSheets >= 3) {
+              const norm = idx / (totalSheets - 1) - 0.5;
+              fanX = norm * 64;
+              fanY = -68 + idx * 14;
+              fanR = norm * 14;
+            }
+
+            sheetEl.style.setProperty('--depth', String(depth));
+            sheetEl.style.setProperty('--fan-x', `${fanX}px`);
+            sheetEl.style.setProperty('--fan-y', `${fanY}px`);
+            sheetEl.style.setProperty('--fan-r', `${fanR}deg`);
+
+            const topRow = document.createElement('div');
+            topRow.className = 'sheet__top';
+
+            const dateEl = document.createElement('span');
+            dateEl.className = 'sheet__date';
+            dateEl.textContent = item.isPlaceholder ? '' : item.date;
+
+            const titleEl = document.createElement('span');
+            titleEl.className = 'sheet__title';
+            if (item.isPlaceholder) {
+              titleEl.setAttribute('data-i18n-node', '');
+              titleEl.textContent = dict.comingSoon;
+            } else {
+              titleEl.textContent = item.title;
+            }
+
+            topRow.appendChild(dateEl);
+            topRow.appendChild(titleEl);
+
+            const pillWrap = document.createElement('div');
+            pillWrap.className = 'sheet__pill-wrap';
+            const pillEl = document.createElement('span');
+            pillEl.className = 'sheet__pill';
+            pillEl.setAttribute('data-i18n-node', '');
+            pillEl.textContent = dict.tapAgain;
+            pillWrap.appendChild(pillEl);
+
+            sheetEl.appendChild(topRow);
+            sheetEl.appendChild(pillWrap);
+
+            // Sheet Click & Keyboard Events (Two-Tap Mechanic)
+            sheetEl.addEventListener('click', (e) => {
+              e.stopPropagation();
+              handleSheetTap(item.id, folderCfg.id);
+            });
+            sheetEl.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                e.stopPropagation();
+                handleSheetTap(item.id, folderCfg.id);
+              }
+            });
+
+            sheetsWrap.appendChild(sheetEl);
+            sheetRefs.set(item.id, {
+              el: sheetEl,
+              titleEl,
+              pillEl,
+              data: item,
+              folderId: folderCfg.id
+            });
+          });
+
+          // Front Frosted Glass Panel
+          const front = document.createElement('div');
+          front.className = 'folder-front';
+
+          const labelWrap = document.createElement('div');
+          labelWrap.className = 'folder-label';
+
+          const labelTitle = document.createElement('span');
+          labelTitle.className = 'folder-label__title';
+          labelTitle.setAttribute('data-i18n-node', '');
+          const folderTitleStr = dict.folderNames[folderCfg.id] || folderCfg.id;
+          labelTitle.textContent = folderTitleStr;
+
+          const labelCount = document.createElement('span');
+          labelCount.className = 'folder-label__count';
+          labelCount.setAttribute('data-i18n-node', '');
+          const countStr = dict.formatWorksCount(realCount);
+          labelCount.textContent = countStr;
+
+          labelWrap.appendChild(labelTitle);
+          labelWrap.appendChild(labelCount);
+          front.appendChild(labelWrap);
+
+          folderEl.setAttribute('aria-label', dict.folderAriaLabel(folderTitleStr, countStr, false));
+
+          folderEl.appendChild(back);
+          folderEl.appendChild(sheetsWrap);
+          folderEl.appendChild(front);
+          stage.appendChild(folderEl);
+          slot.appendChild(stage);
+          grid.appendChild(slot);
+
+          // Pointer Parallax on Stage
+          stage.addEventListener('pointermove', (e) => {
+            if (prefersReducedMotion || e.pointerType === 'touch') return;
+            const rect = stage.getBoundingClientRect();
+            const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+            const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+            stage.style.setProperty('--px', nx.toFixed(3));
+            stage.style.setProperty('--py', ny.toFixed(3));
+          });
+          stage.addEventListener('pointerleave', () => {
+            stage.style.setProperty('--px', '0');
+            stage.style.setProperty('--py', '0');
+          });
+
+          // Folder Open / Toggle Events
+          folderEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (openFolderId === folderCfg.id) {
+              if (selectedSheetId) {
+                deselectSheet();
+              } else {
+                closeFolder(folderCfg.id);
+              }
+            } else {
+              openFolder(folderCfg.id);
+            }
+          });
+
+          folderEl.addEventListener('keydown', (e) => {
+            if (e.target !== folderEl) return;
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              if (openFolderId === folderCfg.id) {
+                closeFolder(folderCfg.id);
+              } else {
+                openFolder(folderCfg.id);
+              }
+            }
+          });
+
+          folderRefs.set(folderCfg.id, {
+            id: folderCfg.id,
+            index: folderIndex,
+            slot,
+            stage,
+            folderEl,
+            canvas,
+            sheetsWrap,
+            labelTitle,
+            labelCount,
+            realCount,
+            seed: folderCfg.seed,
+            flowAngle: folderCfg.flowAngle,
+            canvasPainted: false
+          });
+        });
+      }
+
+      /* =========================================================================
+       * 9. FOLDER & SHEET INTERACTION LOGIC
+       * ========================================================================= */
+      function openFolder(folderId) {
+        if (openFolderId && openFolderId !== folderId) {
+          closeFolder(openFolderId);
+        }
+        deselectSheet();
+        const ref = folderRefs.get(folderId);
+        if (!ref) return;
+
+        openFolderId = folderId;
+        ref.folderEl.classList.add('is-open');
+        ref.folderEl.setAttribute('aria-expanded', 'true');
+        ref.sheetsWrap.removeAttribute('inert');
+
+        const dict = TRANSLATIONS[currentLang];
+        const name = dict.folderNames[folderId] || folderId;
+        const countStr = dict.formatWorksCount(ref.realCount);
+        ref.folderEl.setAttribute('aria-label', dict.folderAriaLabel(name, countStr, true));
+
+        // Enable keyboard tabbing on sheets inside open folder
+        sheetRefs.forEach((sRef) => {
+          if (sRef.folderId === folderId) {
+            sRef.el.setAttribute('tabindex', '0');
+          }
+        });
+      }
+
+      function closeFolder(folderId) {
+        const ref = folderRefs.get(folderId);
+        if (!ref) return;
+
+        if (selectedSheetId) {
+          const selRef = sheetRefs.get(selectedSheetId);
+          if (selRef && selRef.folderId === folderId) {
+            deselectSheet();
+          }
+        }
+
+        ref.folderEl.classList.remove('is-open');
+        ref.folderEl.setAttribute('aria-expanded', 'false');
+        ref.sheetsWrap.setAttribute('inert', '');
+
+        const dict = TRANSLATIONS[currentLang];
+        const name = dict.folderNames[folderId] || folderId;
+        const countStr = dict.formatWorksCount(ref.realCount);
+        ref.folderEl.setAttribute('aria-label', dict.folderAriaLabel(name, countStr, false));
+
+        sheetRefs.forEach((sRef) => {
+          if (sRef.folderId === folderId) {
+            sRef.el.setAttribute('tabindex', '-1');
+          }
+        });
+
+        if (openFolderId === folderId) {
+          openFolderId = null;
+        }
+      }
+
+      function selectSheet(sheetId) {
+        if (selectedSheetId && selectedSheetId !== sheetId) {
+          deselectSheet();
+        }
+        const sRef = sheetRefs.get(sheetId);
+        if (!sRef) return;
+
+        selectedSheetId = sheetId;
+        sRef.el.classList.add('is-selected');
+
+        clearTimeout(deselectTimer);
+        deselectTimer = setTimeout(() => {
+          if (selectedSheetId === sheetId) {
+            deselectSheet();
+          }
+        }, 4000);
+      }
+
+      function deselectSheet() {
+        clearTimeout(deselectTimer);
+        deselectTimer = null;
+        if (!selectedSheetId) return;
+        const sRef = sheetRefs.get(selectedSheetId);
+        if (sRef) {
+          sRef.el.classList.remove('is-selected');
+        }
+        selectedSheetId = null;
+      }
+
+      function handleSheetTap(sheetId, folderId) {
+        // Sheets are only interactive while their folder is open
+        if (openFolderId !== folderId) return;
+
+        const sRef = sheetRefs.get(sheetId);
+        if (!sRef) return;
+
+        // First tap: select sheet (Animation 8)
+        if (selectedSheetId !== sheetId) {
+          selectSheet(sheetId);
+          return;
+        }
+
+        // Second tap on already selected sheet
+        clearTimeout(deselectTimer);
+        const link = sRef.data.link ? sRef.data.link.trim() : '';
+
+        if (!link || sRef.data.isPlaceholder) {
+          showToast(TRANSLATIONS[currentLang].linkComingSoon);
+          deselectSheet();
+          return;
+        }
+
+        // Synchronous window.open inside click handler so popup blockers allow it
+        window.open(link, '_blank', 'noopener');
+
+        // Animation 9: Sheet scales up & fades while black curtain with project name fades over screen
+        sRef.el.classList.remove('is-selected');
+        sRef.el.classList.add('is-launching');
+        selectedSheetId = null;
+
+        const curtain = document.getElementById('project-curtain');
+        const curtainEyebrow = document.getElementById('project-curtain-eyebrow');
+        const curtainTitle = document.getElementById('project-curtain-title');
+
+        if (curtain && curtainTitle && curtainEyebrow) {
+          curtainEyebrow.textContent = TRANSLATIONS[currentLang].openingProject;
+          curtainTitle.textContent = sRef.data.title;
+          curtain.classList.add('is-active');
+
+          setTimeout(() => {
+            curtain.classList.remove('is-active');
+            sRef.el.classList.remove('is-launching');
+          }, 640);
+        } else {
+          setTimeout(() => {
+            sRef.el.classList.remove('is-launching');
+          }, 640);
+        }
+      }
+
+      // Close or deselect on outside click or Escape
+      document.addEventListener('click', (e) => {
+        if (!openFolderId) return;
+        const activeRef = folderRefs.get(openFolderId);
+        if (activeRef && !activeRef.folderEl.contains(e.target)) {
+          closeFolder(openFolderId);
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (selectedSheetId) {
+            deselectSheet();
+          } else if (openFolderId) {
+            const folderToFocus = folderRefs.get(openFolderId);
+            closeFolder(openFolderId);
+            if (folderToFocus) folderToFocus.folderEl.focus();
+          }
+        }
+      });
+
+      /* =========================================================================
+       * 10. PAYMENT CARDS BUILDER & DIGIT-BY-DIGIT REVEAL
+       * ========================================================================= */
+      function maskCardNumber(fullNum) {
+        const clean = fullNum.replace(/\s+/g, '');
+        if (clean.length < 8) return fullNum;
+        const first4 = clean.slice(0, 4);
+        const last4 = clean.slice(-4);
+        return `${first4} •••• •••• ${last4}`;
+      }
+
+      function renderCardCharacters(container, str, animateStagger) {
+        const groups = str.split(' ');
+        const existingChars = container.querySelectorAll('.digit-char');
+
+        if (!animateStagger || existingChars.length === 0 || prefersReducedMotion) {
+          container.innerHTML = '';
+          groups.forEach((grp) => {
+            const gSpan = document.createElement('span');
+            gSpan.className = 'digit-group';
+            for (const ch of grp) {
+              const cSpan = document.createElement('span');
+              cSpan.className = 'digit-char';
+              cSpan.textContent = ch;
+              gSpan.appendChild(cSpan);
+            }
+            container.appendChild(gSpan);
+          });
+          return;
+        }
+
+        // Smooth digit-by-digit reveal
+        const flatTarget = str.replace(/\s+/g, '').split('');
+        existingChars.forEach((charEl, i) => {
+          const nextChar = flatTarget[i] || '';
+          if (charEl.textContent === nextChar) return;
+          const delay = i * 26;
+          setTimeout(() => {
+            charEl.classList.add('is-morphing');
+            setTimeout(() => {
+              charEl.textContent = nextChar;
+              charEl.classList.remove('is-morphing');
+            }, 190);
+          }, delay);
+        });
+      }
+
+      function buildPayments() {
+        const section = document.getElementById('payments-section');
+        const divider = document.getElementById('payments-divider');
+        const grid = document.getElementById('payments-grid');
+        if (!section || !grid) return;
+
+        if (!Array.isArray(CONFIG.payments) || CONFIG.payments.length === 0) {
+          section.style.display = 'none';
+          if (divider) divider.style.display = 'none';
+          return;
+        }
+
+        const dict = TRANSLATIONS[currentLang];
+        const holderTrimmed = (CONFIG.cardholderName || '').trim();
+
+        CONFIG.payments.forEach((payCfg, idx) => {
+          const card = document.createElement('article');
+          card.className = 'tilt-card bank-card';
+          card.style.setProperty('--idx', String(idx));
+
+          const top = document.createElement('div');
+          top.className = 'bank-card__top';
+
+          const bankTitle = document.createElement('h3');
+          bankTitle.className = 'bank-card__bank';
+          bankTitle.setAttribute('data-i18n-node', '');
+          bankTitle.textContent = dict[payCfg.bankKey] || payCfg.bankKey;
+
+          const chip = document.createElement('div');
+          chip.className = 'bank-card__chip';
+          chip.setAttribute('aria-hidden', 'true');
+
+          top.appendChild(bankTitle);
+          top.appendChild(chip);
+
+          const numEl = document.createElement('div');
+          numEl.className = 'bank-card__number';
+          numEl.setAttribute('aria-live', 'polite');
+          renderCardCharacters(numEl, maskCardNumber(payCfg.number), false);
+
+          const bottomWrap = document.createElement('div');
+
+          if (holderTrimmed) {
+            const holderEl = document.createElement('div');
+            holderEl.className = 'bank-card__holder';
+            holderEl.textContent = holderTrimmed;
+            bottomWrap.appendChild(holderEl);
+          }
+
+          const actions = document.createElement('div');
+          actions.className = 'bank-card__actions';
+
+          // Show / Hide Button
+          const showBtn = document.createElement('button');
+          showBtn.type = 'button';
+          showBtn.className = 'glass-action-btn magnetic-btn';
+          showBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <span class="show-btn__label" data-i18n-node>${dict.showNumber}</span>
+          `;
+          const showLabel = showBtn.querySelector('.show-btn__label');
+
+          // Copy Button with stroke-by-stroke tick SVG
+          const copyBtn = document.createElement('button');
+          copyBtn.type = 'button';
+          copyBtn.className = 'glass-action-btn magnetic-btn';
+          copyBtn.innerHTML = `
+            <span class="copy-btn__icon-wrap" aria-hidden="true">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              <svg class="tick-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12.5l5.2 5.2L20 6.5" />
+              </svg>
+            </span>
+            <span class="copy-btn__label" data-i18n-node>${dict.copyNumber}</span>
+          `;
+          const copyLabel = copyBtn.querySelector('.copy-btn__label');
+
+          const state = {
+            revealed: false,
+            isCopied: false,
+            copyTimer: null,
+            bankKey: payCfg.bankKey,
+            bankTitle,
+            showLabel,
+            copyLabel
+          };
+
+          showBtn.addEventListener('click', () => {
+            state.revealed = !state.revealed;
+            const targetStr = state.revealed ? payCfg.number : maskCardNumber(payCfg.number);
+            renderCardCharacters(numEl, targetStr, true);
+            showLabel.textContent = state.revealed
+              ? TRANSLATIONS[currentLang].hideNumber
+              : TRANSLATIONS[currentLang].showNumber;
+          });
+
+          copyBtn.addEventListener('click', () => {
+            const rawDigits = payCfg.number.replace(/\s+/g, '');
+            copyTextToClipboard(rawDigits).then(() => {
+              showToast(TRANSLATIONS[currentLang].toastCopied);
+              triggerCopyMorph(copyBtn, copyLabel, state);
+            });
+          });
+
+          actions.appendChild(showBtn);
+          actions.appendChild(copyBtn);
+          bottomWrap.appendChild(actions);
+
+          card.appendChild(top);
+          card.appendChild(numEl);
+          card.appendChild(bottomWrap);
+          grid.appendChild(card);
+
+          paymentRefs.set(payCfg.id, state);
+        });
+      }
+
+      function copyTextToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        }
+        return fallbackCopy(text);
+      }
+
+      function fallbackCopy(text) {
+        return new Promise((resolve) => {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand('copy');
+          } catch (_) {}
+          document.body.removeChild(ta);
+          resolve();
+        });
+      }
+
+      function triggerCopyMorph(btn, labelEl, state) {
+        clearTimeout(state.copyTimer);
+        state.isCopied = true;
+        btn.classList.add('is-copied');
+
+        labelEl.classList.add('is-morphing');
+        setTimeout(() => {
+          labelEl.textContent = TRANSLATIONS[currentLang].copiedNumber;
+          labelEl.classList.remove('is-morphing');
+        }, 160);
+
+        state.copyTimer = setTimeout(() => {
+          state.isCopied = false;
+          btn.classList.remove('is-copied');
+          labelEl.classList.add('is-morphing');
+          setTimeout(() => {
+            labelEl.textContent = TRANSLATIONS[currentLang].copyNumber;
+            labelEl.classList.remove('is-morphing');
+          }, 160);
+        }, 2200);
+      }
+
+      /* =========================================================================
+       * 11. TOAST NOTIFICATIONS (Animation 11)
+       * ========================================================================= */
+      function showToast(message) {
+        const layer = document.getElementById('toast-layer');
+        if (!layer) return;
+
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        layer.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            toast.classList.add('is-visible');
+          });
+        });
+
+        setTimeout(() => {
+          toast.classList.remove('is-visible');
+          setTimeout(() => {
+            if (toast.parentNode) toast.parentNode.removeChild(toast);
+          }, 500);
+        }, 2800);
+      }
+
+      /* =========================================================================
+       * 12. LANGUAGE SWITCHER (Staggered Blur-Crossfade, Zero DOM Rebuilding)
+       * ========================================================================= */
+      function applyLanguageMetadata(lang) {
+        const dict = TRANSLATIONS[lang];
+        document.documentElement.lang = lang;
+        document.title = dict.docTitle;
+
+        const metaDesc = document.getElementById('meta-desc');
+        if (metaDesc) metaDesc.setAttribute('content', dict.metaDesc);
+
+        const ogDesc = document.getElementById('og-desc');
+        if (ogDesc) ogDesc.setAttribute('content', dict.tagline);
+
+        const ogLocale = document.getElementById('og-locale');
+        if (ogLocale) ogLocale.setAttribute('content', dict.ogLocale);
+
+        const waLink = document.getElementById('whatsapp-link');
+        if (waLink) {
+          waLink.href = `https://wa.me/${CONFIG.phoneRaw}?text=${encodeURIComponent(dict.whatsappGreeting)}`;
+        }
+
+        const switcher = document.getElementById('lang-switch');
+        if (switcher) {
+          switcher.setAttribute('data-active-lang', lang);
+          const btns = switcher.querySelectorAll('.lang-switch__btn');
+          btns.forEach((btn) => {
+            const isTarget = btn.dataset.lang === lang;
+            btn.setAttribute('aria-pressed', isTarget ? 'true' : 'false');
+          });
+        }
+      }
+
+      function updateAllTranslatedTextNodes(lang) {
+        const dict = TRANSLATIONS[lang];
+
+        // Static data-i18n elements
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          const key = el.getAttribute('data-i18n');
+          if (key && typeof dict[key] === 'string') {
+            el.textContent = dict[key];
+          }
+        });
+
+        // Folders (titles, live counts, ARIA labels)
+        folderRefs.forEach((ref) => {
+          const fName = dict.folderNames[ref.id] || ref.id;
+          const countStr = dict.formatWorksCount(ref.realCount);
+          ref.labelTitle.textContent = fName;
+          ref.labelCount.textContent = countStr;
+          const isOpen = openFolderId === ref.id;
+          ref.folderEl.setAttribute('aria-label', dict.folderAriaLabel(fName, countStr, isOpen));
+        });
+
+        // Sheets (placeholder text and selection pills)
+        sheetRefs.forEach((sRef) => {
+          if (sRef.data.isPlaceholder) {
+            sRef.titleEl.textContent = dict.comingSoon;
+          }
+          sRef.pillEl.textContent = dict.tapAgain;
+        });
+
+        // Payment cards
+        paymentRefs.forEach((pState) => {
+          pState.bankTitle.textContent = dict[pState.bankKey] || pState.bankKey;
+          pState.showLabel.textContent = pState.revealed ? dict.hideNumber : dict.showNumber;
+          pState.copyLabel.textContent = pState.isCopied ? dict.copiedNumber : dict.copyNumber;
+        });
+      }
+
+      function switchLanguage(newLang) {
+        if (newLang !== 'en' && newLang !== 'ru') return;
+        if (newLang === currentLang) return;
+
+        currentLang = newLang;
+        try {
+          localStorage.setItem('abdursolo_lang', newLang);
+        } catch (_) {}
+
+        applyLanguageMetadata(newLang);
+
+        if (prefersReducedMotion) {
+          updateAllTranslatedTextNodes(newLang);
+          return;
+        }
+
+        // Staggered 25ms blur-crossfade (~450ms) across all [data-i18n-node] elements
+        const nodes = Array.from(document.querySelectorAll('[data-i18n-node]'));
+        nodes.forEach((node, idx) => {
+          const stagger = idx * 25;
+          setTimeout(() => {
+            node.classList.add('is-switching-lang');
+            setTimeout(() => {
+              // Update text at peak blur
+              const key = node.getAttribute('data-i18n');
+              if (key && typeof TRANSLATIONS[newLang][key] === 'string') {
+                node.textContent = TRANSLATIONS[newLang][key];
+              }
+              if (idx === 0) {
+                // Also update dynamic folder/sheet/payment text nodes
+                updateAllTranslatedTextNodes(newLang);
+              }
+              node.classList.remove('is-switching-lang');
+            }, 220);
+          }, stagger);
+        });
+      }
+
+      function initLanguageSwitcher() {
+        applyLanguageMetadata(currentLang);
+        updateAllTranslatedTextNodes(currentLang);
+
+        const switcher = document.getElementById('lang-switch');
+        if (!switcher) return;
+        switcher.querySelectorAll('.lang-switch__btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const targetLang = btn.dataset.lang;
+            switchLanguage(targetLang);
+          });
+        });
+      }
+
+      /* =========================================================================
+       * 13. MAGNETIC BUTTONS, TAP RIPPLE, AND 3D CARD TILT
+       * ========================================================================= */
+      function initMagneticAndRipple() {
+        const magButtons = document.querySelectorAll('.magnetic-btn');
+        magButtons.forEach((btn) => {
+          btn.addEventListener('pointermove', (e) => {
+            if (prefersReducedMotion || e.pointerType === 'touch') return;
+            const rect = btn.getBoundingClientRect();
+            const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+            const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+            // Max 8px pull toward cursor
+            const mx = Math.max(-8, Math.min(8, dx * 8));
+            const my = Math.max(-8, Math.min(8, dy * 8));
+            btn.style.setProperty('--mx', `${mx.toFixed(2)}px`);
+            btn.style.setProperty('--my', `${my.toFixed(2)}px`);
+          });
+
+          btn.addEventListener('pointerleave', () => {
+            btn.style.setProperty('--mx', '0px');
+            btn.style.setProperty('--my', '0px');
+          });
+
+          btn.addEventListener('pointerdown', (e) => {
+            if (prefersReducedMotion) return;
+            const rect = btn.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.className = 'btn-ripple';
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = `${size}px`;
+            ripple.style.height = `${size}px`;
+            ripple.style.left = `${e.clientX - rect.left}px`;
+            ripple.style.top = `${e.clientY - rect.top}px`;
+            btn.appendChild(ripple);
+            setTimeout(() => {
+              if (ripple.parentNode) ripple.parentNode.removeChild(ripple);
+            }, 780);
+          });
+        });
+      }
+
+      function initTiltCards() {
+        const cards = document.querySelectorAll('.tilt-card');
+        cards.forEach((card) => {
+          card.addEventListener('pointermove', (e) => {
+            if (prefersReducedMotion || e.pointerType === 'touch') return;
+            const rect = card.getBoundingClientRect();
+            const px = (e.clientX - rect.left) / rect.width;
+            const py = (e.clientY - rect.top) / rect.height;
+            // Max 4deg 3D tilt
+            const ry = (px - 0.5) * 8;
+            const rx = (0.5 - py) * 8;
+            card.style.setProperty('--rx', `${rx.toFixed(2)}deg`);
+            card.style.setProperty('--ry', `${ry.toFixed(2)}deg`);
+            card.style.setProperty('--hx', `${(px * 100).toFixed(1)}%`);
+            card.style.setProperty('--hy', `${(py * 100).toFixed(1)}%`);
+          });
+
+          card.addEventListener('pointerleave', () => {
+            card.style.setProperty('--rx', '0deg');
+            card.style.setProperty('--ry', '0deg');
+          });
+        });
+      }
+
+      /* =========================================================================
+       * 14. CURSOR SPOTLIGHT, SCROLL PROGRESS & TOPBAR FROSTING (via rAF)
+       * ========================================================================= */
+      function initScrollAndSpotlight() {
+        const progressEl = document.getElementById('scroll-progress');
+        const topbarEl = document.getElementById('topbar');
+        const monolithEl = document.getElementById('about-monolith');
+
+        let mouseX = window.innerWidth * 0.5;
+        let mouseY = window.innerHeight * 0.35;
+        let spotRafPending = false;
+
+        window.addEventListener('pointermove', (e) => {
+          if (prefersReducedMotion || e.pointerType === 'touch') return;
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          if (!spotRafPending) {
+            spotRafPending = true;
+            requestAnimationFrame(() => {
+              document.documentElement.style.setProperty('--spot-x', `${mouseX}px`);
+              document.documentElement.style.setProperty('--spot-y', `${mouseY}px`);
+              spotRafPending = false;
+            });
+          }
+        }, { passive: true });
+
+        let scrollRafPending = false;
+        function updateScrollMetrics() {
+          const scrollY = window.scrollY || window.pageYOffset;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = docHeight > 0 ? Math.min(1, Math.max(0, scrollY / docHeight)) : 0;
+
+          if (progressEl) {
+            progressEl.style.transform = `scaleX(${progress.toFixed(4)})`;
+          }
+
+          if (topbarEl) {
+            if (scrollY > 40) {
+              topbarEl.classList.add('is-scrolled');
+            } else {
+              topbarEl.classList.remove('is-scrolled');
+            }
+          }
+
+          if (monolithEl && !prefersReducedMotion) {
+            const rect = monolithEl.getBoundingClientRect();
+            const centerOffset = (window.innerHeight * 0.5 - (rect.top + rect.height * 0.5)) * 0.08;
+            monolithEl.style.setProperty('--parallax-y', `${centerOffset.toFixed(1)}px`);
+          }
+
+          scrollRafPending = false;
+        }
+
+        window.addEventListener('scroll', () => {
+          if (!scrollRafPending) {
+            scrollRafPending = true;
+            requestAnimationFrame(updateScrollMetrics);
+          }
+        }, { passive: true });
+
+        updateScrollMetrics();
+      }
+
+      /* =========================================================================
+       * 15. INTERSECTION OBSERVERS FOR SECTION & FOLDER REVEALS
+       * ========================================================================= */
+      function initSectionReveals() {
+        const revealTargets = [
+          document.getElementById('works-header'),
+          document.getElementById('about'),
+          document.getElementById('services'),
+          document.getElementById('contact'),
+          document.getElementById('payments-section')
+        ].filter(Boolean);
+
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+          revealTargets.forEach((el) => el.classList.add('is-revealed'));
+          folderRefs.forEach((ref) => {
+            ref.slot.classList.add('is-assembled');
+            if (!ref.canvasPainted) {
+              ref.canvasPainted = true;
+              enqueueCanvasPaint(ref.canvas, ref.seed, ref.flowAngle);
+            }
+          });
+          return;
+        }
+
+        const sectionObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -40px 0px' });
+
+        revealTargets.forEach((el) => sectionObserver.observe(el));
+
+        // Folders entrance with 140ms stagger & lazy canvas painting
+        const folderObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const folderId = entry.target.dataset.folderId;
+            const ref = folderRefs.get(folderId);
+            if (ref) {
+              setTimeout(() => {
+                ref.slot.classList.add('is-assembled');
+              }, ref.index * 140);
+
+              if (!ref.canvasPainted) {
+                ref.canvasPainted = true;
+                enqueueCanvasPaint(ref.canvas, ref.seed, ref.flowAngle);
+              }
+            }
+            obs.unobserve(entry.target);
+          });
+        }, { threshold: 0.18 });
+
+        folderRefs.forEach((ref) => folderObserver.observe(ref.slot));
+      }
+
+      /* =========================================================================
+       * 16. INTRO CHOREOGRAPHY (~2.4s first load, skipped on reduced motion)
+       * ========================================================================= */
+      function runIntroSequence() {
+        const curtain = document.getElementById('intro-curtain');
+        const hero = document.querySelector('.hero');
+
+        if (prefersReducedMotion || !curtain) {
+          if (curtain) curtain.classList.add('is-done');
+          if (hero) hero.classList.add('is-revealed');
+          return;
+        }
+
+        requestAnimationFrame(() => {
+          curtain.classList.add('is-playing');
+        });
+
+        // Lift curtain at 1.25s while hero name rises letter by letter
+        setTimeout(() => {
+          curtain.classList.add('is-lifting');
+          if (hero) hero.classList.add('is-revealed');
+        }, 1250);
+
+        setTimeout(() => {
+          curtain.classList.add('is-done');
+        }, 2420);
+      }
+
+      /* =========================================================================
+       * 17. INITIALIZATION
+       * ========================================================================= */
+      function init() {
+        const yearEl = document.getElementById('footer-year');
+        if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+        updateStageScale();
+        window.addEventListener('resize', updateStageScale, { passive: true });
+
+        initLogoFallbacks();
+        buildHeroLetters();
+        buildFolders();
+        buildPayments();
+        initLanguageSwitcher();
+        initMagneticAndRipple();
+        initTiltCards();
+        initScrollAndSpotlight();
+        initSectionReveals();
+        runIntroSequence();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+  </html>
